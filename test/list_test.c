@@ -11,31 +11,31 @@ TEST_GROUP_C_SETUP(ListTest) {
 
 TEST_C(ListTest, PushPopFront) {
     char *exp1 = "test1";
-    CHECK_EQUAL_C_INT(S_OK, push_front(l, exp1));
+    CHECK_EQUAL_C_INT(S_OK, list_push_front(l, exp1));
     char *exp2 = "test2";
-    CHECK_EQUAL_C_INT(S_OK, push_front(l, exp2));
+    CHECK_EQUAL_C_INT(S_OK, list_push_front(l, exp2));
 
 
     char *actual;
-    CHECK_EQUAL_C_INT(S_OK, pop_front(l, (void **) &actual));
+    CHECK_EQUAL_C_INT(S_OK, list_pop_front(l, (void **) &actual));
     CHECK_EQUAL_C_STRING(exp2, actual);
 
-    CHECK_EQUAL_C_INT(S_OK, pop_front(l, (void **) &actual));
+    CHECK_EQUAL_C_INT(S_OK, list_pop_front(l, (void **) &actual));
     CHECK_EQUAL_C_STRING(exp1, actual);
 }
 
 TEST_C(ListTest, PushPopBack) {
     char *exp1 = "test1";
-    CHECK_EQUAL_C_INT(S_OK, push_back(l, exp1));
+    CHECK_EQUAL_C_INT(S_OK, list_push_back(l, exp1));
     char *exp2 = "test2";
-    CHECK_EQUAL_C_INT(S_OK, push_back(l, exp2));
+    CHECK_EQUAL_C_INT(S_OK, list_push_back(l, exp2));
 
 
     char *actual;
-    CHECK_EQUAL_C_INT(S_OK, pop_back(l, (void **) &actual));
+    CHECK_EQUAL_C_INT(S_OK, list_pop_back(l, (void **) &actual));
     CHECK_EQUAL_C_STRING(exp2, actual);
 
-    CHECK_EQUAL_C_INT(S_OK, pop_back(l, (void **) &actual));
+    CHECK_EQUAL_C_INT(S_OK, list_pop_back(l, (void **) &actual));
     CHECK_EQUAL_C_STRING(exp1, actual);
 }
 
@@ -50,7 +50,7 @@ bool cmp1(void *str) {
 TEST_C(ListTest, FilterListNew) {
 
     for (int i = 0; i < sizeof(data) / sizeof(char *); ++i) {
-        CHECK_EQUAL_C_INT(S_OK, push_back(l, data[i]));
+        CHECK_EQUAL_C_INT(S_OK, list_push_back(l, data[i]));
     }
 
     List *nl;
@@ -79,7 +79,7 @@ bool cmp2(void *str) {
 TEST_C(ListTest, FilterListMod) {
 
     for (int i = 0; i < sizeof(data) / sizeof(char *); ++i) {
-        CHECK_EQUAL_C_INT(S_OK, push_back(l, data[i]));
+        CHECK_EQUAL_C_INT(S_OK, list_push_back(l, data[i]));
     }
 
     CHECK_EQUAL_C_INT(S_OK, filter_list_mod(l, cmp2));
@@ -95,9 +95,9 @@ TEST_C(ListTest, FilterListMod) {
 
 
 TEST_C(ListTest, SortList) {
-    CHECK_EQUAL_C_INT(S_OK, push_back(l, "d"));
-    CHECK_EQUAL_C_INT(S_OK, push_front(l, "c"));
-    CHECK_EQUAL_C_INT(S_OK, push_back(l, "a"));
+    CHECK_EQUAL_C_INT(S_OK, list_push_back(l, "d"));
+    CHECK_EQUAL_C_INT(S_OK, list_push_front(l, "c"));
+    CHECK_EQUAL_C_INT(S_OK, list_push_back(l, "a"));
 
     list_sort(l, (int (*)(void *, void *)) strcmp);
     Node *head;
@@ -108,6 +108,21 @@ TEST_C(ListTest, SortList) {
         }
         head = head->next;
     }
+}
+
+TEST_C(ListTest, ReverseList) {
+    CHECK_EQUAL_C_INT(S_OK, list_push_back(l, data[0]));
+    CHECK_EQUAL_C_INT(S_OK, list_push_back(l, data[1]));
+    CHECK_EQUAL_C_INT(S_OK, list_push_back(l, data[2]));
+
+    list_reverse(l);
+
+    for (int i = 0; i < sizeof(data) / sizeof(char *); ++i) {
+        char *v;
+        CHECK_EQUAL_C_INT(S_OK, list_pop_back(l, (void **) &v));
+        CHECK_EQUAL_C_STRING(data[i], v);
+    }
+
 }
 
 TEST_GROUP_C_TEARDOWN(ListTest) {

@@ -43,7 +43,7 @@ t_ret new_list(List **l) {
     return S_OK;
 }
 
-t_ret push_back(List *l, void *data) {
+t_ret list_push_back(List *l, void *data) {
     Node *n = calloc(1, sizeof(Node));
     if (!n) return S_ALLOC_ERR;
 
@@ -62,7 +62,7 @@ t_ret push_back(List *l, void *data) {
     return S_OK;
 }
 
-t_ret push_front(List *l, void *data) {
+t_ret list_push_front(List *l, void *data) {
     Node *n = calloc(1, sizeof(Node));
     if (!n) return S_ALLOC_ERR;
 
@@ -81,7 +81,7 @@ t_ret push_front(List *l, void *data) {
     return S_OK;
 }
 
-t_ret pop_front(List *l, void **data) {
+t_ret list_pop_front(List *l, void **data) {
     Node *tmp;
     if (l->size == 0) {
         return S_NOT_EXIST;
@@ -96,7 +96,7 @@ t_ret pop_front(List *l, void **data) {
     return S_OK;
 }
 
-t_ret pop_back(List *l, void **data) {
+t_ret list_pop_back(List *l, void **data) {
     Node *tmp;
     if (l->size == 0) {
         return S_NOT_EXIST;
@@ -121,7 +121,7 @@ t_ret filter_list_new(List *l, List **nl, bool (*f)(void *)) {
     curr = l->head;
     while (curr) {
         if (f(curr->data)) {
-            r = push_back(*nl, curr->data);
+            r = list_push_back(*nl, curr->data);
             if (r != S_OK) {
                 delete_list(*nl, NULL);
                 return r;
@@ -162,6 +162,22 @@ void list_sort(List *l, int (*cmp) (void*, void*)) {
             n = n->next;
         }
     }
+}
+
+void list_reverse(List *l) {
+    if (l->size == 0 || l->size == 1) return;
+
+    Node  *tmp;
+    Node *n = l->head;
+    while (n) {
+        tmp = n->next;
+        n->next = n->prev;
+        n->prev = tmp;
+        n = n->prev;
+    }
+    tmp = l->head;
+    l->head = l->tail;
+    l->tail = tmp;
 }
 
 void list_foreach(List *l, void (*f)(void*)) {

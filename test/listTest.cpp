@@ -12,6 +12,7 @@ TEST_C_WRAPPER(ListTest, PushPopBack)
 TEST_C_WRAPPER(ListTest, FilterListNew)
 TEST_C_WRAPPER(ListTest, FilterListMod)
 TEST_C_WRAPPER(ListTest, SortList)
+TEST_C_WRAPPER(ListTest, ReverseList)
 
 int main(int argc, char **argv)
 {
