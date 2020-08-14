@@ -1,6 +1,6 @@
 #include "list.h"
 #include "retcodes.h"
-#include <stdlib.h>
+
 
 
 struct s_list {
@@ -206,7 +206,7 @@ t_ret list_get_tail(List *l, Node** n) {
 }
 
 
-void delete_list(List *l, void (*cf)(void *data)) {
+void delete_list(List *l, void (*cf)(void *)) {
     Node *next, *curr;
     if (l->size == 0) {
         free(l);

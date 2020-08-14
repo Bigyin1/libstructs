@@ -13,4 +13,5 @@ set(CMAKE_LINKER_FLAGS_DEBUG "${CMAKE_LINKER_FLAGS_DEBUG} -fno-omit-frame-pointe
 enable_testing()
 
 add_subdirectory(list)
+add_subdirectory(slice)
 add_subdirectory(test)

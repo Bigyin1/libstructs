@@ -8,5 +8,8 @@ include_directories(../includes ${CPPUTEST_INCLUDE_DIRS})
 
 add_executable(list_test list_test.c listTest.cpp)
 target_link_libraries(list_test lib_list ${CPPUTEST_LDFLAGS})
+add_executable(slice_test slice_test.c sliceTest.cpp)
+target_link_libraries(slice_test lib_slice ${CPPUTEST_LDFLAGS})
 
 add_test(ListTest list_test -c -v)
+add_test(SliceTest slice_test -c -v)
