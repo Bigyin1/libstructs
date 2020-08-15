@@ -24,6 +24,7 @@ struct s_hashtable {
     void (*key_dstr)(void *);
 };
 
+// hashtable_new creates hashtable for string key/value and no-op destructor for key/value
 t_ret hashtable_new_def(HTable **ht) {
     return hashtable_new(ht, NULL, NULL, NULL, NULL);
 }
@@ -31,8 +32,8 @@ t_ret hashtable_new_def(HTable **ht) {
 t_ret hashtable_new(HTable **ht,
                     size_t (*hash)(const void *),
                     int (*key_cmp)(void *, void *),
-                    void (*free_val)(void *),
-                    void (*free_key)(void *)) {
+                    void (*free_key)(void *),
+                    void (*free_val)(void *)) {
 
     *ht = calloc(1, sizeof(HTable));
     if (!(*ht)) return S_ALLOC_ERR;
@@ -53,13 +54,12 @@ t_ret hashtable_new(HTable **ht,
     return S_OK;
 }
 
-t_ret rehash(HTable *ht) {
+static t_ret rehash(HTable *ht) {
 
     Bucket **nb = calloc(ht->cap * RESIZE_FACTOR, sizeof(Bucket *));
     if (!nb) {
         return S_ALLOC_ERR;
     }
-    ht->cap *= RESIZE_FACTOR;
     for (int i = 0; i < ht->cap; ++i) {
         Bucket *curr = ht->buckets[i];
         Bucket *next;
@@ -71,6 +71,9 @@ t_ret rehash(HTable *ht) {
             curr = next;
         }
     }
+    free(ht->buckets);
+    ht->buckets = nb;
+    ht->cap *= RESIZE_FACTOR;
     return S_OK;
 }
 
@@ -139,7 +142,7 @@ void *hashtable_delete(HTable *ht, void *key) {
     return NULL;
 }
 
-void hashtable_del(HTable *ht) {
+void hashtable_free(HTable *ht) {
     for (int i = 0; i < ht->cap; ++i) {
         Bucket *curr = ht->buckets[i];
         Bucket *next;

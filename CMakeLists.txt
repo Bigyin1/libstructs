@@ -14,4 +14,5 @@ enable_testing()
 
 add_subdirectory(list)
 add_subdirectory(slice)
+add_subdirectory(hashtable)
 add_subdirectory(test)
