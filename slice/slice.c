@@ -4,6 +4,10 @@
 #include <string.h>
 
 
+#define MULT_FACTOR 2
+#define THRESHOLD 1024
+#define THRESHOLD_MULT_FACTOR 1.2
+
 struct s_slice {
     void **buffer;
     size_t len;

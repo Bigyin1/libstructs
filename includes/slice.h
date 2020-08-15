@@ -4,9 +4,6 @@
 #include "retcodes.h"
 #include <stdlib.h>
 
-#define MULT_FACTOR 2
-#define THRESHOLD 1024
-#define THRESHOLD_MULT_FACTOR 1.2
 
 
 typedef struct s_slice Slice;
