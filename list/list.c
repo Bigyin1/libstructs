@@ -111,7 +111,7 @@ t_ret list_pop_back(List *l, void **data) {
     return S_OK;
 }
 
-t_ret filter_list_new(List *l, List **nl, bool (*f)(void *)) {
+t_ret list_filter_new(List *l, List **nl, bool (*f)(void *)) {
     Node *curr;
 
     if (l->size == 0) return S_RANGE_ERR;
@@ -123,7 +123,7 @@ t_ret filter_list_new(List *l, List **nl, bool (*f)(void *)) {
         if (f(curr->data)) {
             r = list_push_back(*nl, curr->data);
             if (r != S_OK) {
-                delete_list(*nl, NULL);
+                list_free(*nl, NULL);
                 return r;
             }
         }
@@ -132,7 +132,7 @@ t_ret filter_list_new(List *l, List **nl, bool (*f)(void *)) {
     return S_OK;
 }
 
-t_ret filter_list_mod(List *l, bool (*f)(void *)) {
+t_ret list_filter_mod(List *l, bool (*f)(void *)) {
     Node *next, *curr;
 
     if (l->size == 0) return S_RANGE_ERR;
@@ -206,7 +206,7 @@ t_ret list_get_tail(List *l, Node** n) {
 }
 
 
-void delete_list(List *l, void (*cf)(void *)) {
+void list_free(List *l, void (*cf)(void *)) {
     Node *next, *curr;
     if (l->size == 0) {
         free(l);

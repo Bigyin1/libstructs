@@ -25,9 +25,9 @@ t_ret list_get_head(List *l, Node **n);
 void list_sort(List *l, int (*cmp)(void *, void *));
 t_ret list_get_tail(List *l, Node **n);
 void list_reverse(List *l);
-t_ret filter_list_new(List *l, List **nl, bool (*f)(void *));
-t_ret filter_list_mod(List *l, bool (*f)(void *));
-void delete_list(List *l, void (*cf)(void *data));
+t_ret list_filter_new(List *l, List **nl, bool (*f)(void *));
+t_ret list_filter_mod(List *l, bool (*f)(void *));
+void list_free(List *l, void (*cf)(void *data));
 size_t list_size(List *l);
 
 

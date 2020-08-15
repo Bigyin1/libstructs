@@ -54,7 +54,7 @@ TEST_C(ListTest, FilterListNew) {
     }
 
     List *nl;
-    CHECK_EQUAL_C_INT(S_OK, filter_list_new(l, &nl, cmp1));
+    CHECK_EQUAL_C_INT(S_OK, list_filter_new(l, &nl, cmp1));
     CHECK_EQUAL_C_INT(sizeof(data) / sizeof(char *), list_size(l));
     CHECK_EQUAL_C_INT(2, list_size(nl));
 
@@ -67,7 +67,7 @@ TEST_C(ListTest, FilterListNew) {
     }
     CHECK_C(!head);
 
-    delete_list(nl, NULL);
+    list_free(nl, NULL);
 }
 
 bool cmp2(void *str) {
@@ -82,7 +82,7 @@ TEST_C(ListTest, FilterListMod) {
         CHECK_EQUAL_C_INT(S_OK, list_push_back(l, data[i]));
     }
 
-    CHECK_EQUAL_C_INT(S_OK, filter_list_mod(l, cmp2));
+    CHECK_EQUAL_C_INT(S_OK, list_filter_mod(l, cmp2));
     CHECK_EQUAL_C_INT(2, list_size(l));
 
 
@@ -126,5 +126,5 @@ TEST_C(ListTest, ReverseList) {
 }
 
 TEST_GROUP_C_TEARDOWN(ListTest) {
-    delete_list(l, NULL);
+    list_free(l, NULL);
 }
