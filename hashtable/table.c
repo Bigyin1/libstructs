@@ -4,17 +4,9 @@
 #define LOAD_FACTOR 0.75f
 #define RESIZE_FACTOR 2
 
-typedef struct s_bucket {
-    struct s_bucket *next;
-    void *key;
-    size_t hash;
-    void *val;
-} Bucket;
-
 struct s_hashtable {
     size_t sz;
     size_t cap;
-    size_t threshold;
     double load_factor;
     Bucket **buckets;
 
@@ -39,8 +31,8 @@ t_ret hashtable_new(HTable **ht,
     if (!(*ht)) return S_ALLOC_ERR;
     (*ht)->hash = hash ? hash : string_hash;
     (*ht)->key_cmp = key_cmp ? key_cmp : (int (*)(void *, void *)) strcmp;
-    (*ht)->val_dstr = free_val ? free_val : default_destructor;
-    (*ht)->key_dstr = free_key ? free_key : default_destructor;
+    (*ht)->val_dstr = free_val ? free_val : noop_destructor;
+    (*ht)->key_dstr = free_key ? free_key : noop_destructor;
 
     (*ht)->cap = DEFAULT_CAPACITY;
     (*ht)->load_factor = LOAD_FACTOR;
@@ -78,6 +70,7 @@ static t_ret rehash(HTable *ht) {
 }
 
 t_ret hashtable_set(HTable *ht, void *key, void *val) {
+    if (!key) return S_OTHER;
     if (ht->cap * ht->load_factor <= ht->sz) {
         t_ret ret = rehash(ht);
         if (ret != S_OK) return ret;
@@ -167,6 +160,42 @@ size_t hashtable_capacity(HTable *ht) {
 }
 
 
+// htable iterator
+
+void hashtable_new_iter(HTable *ht, HTableIter *hti) {
+    memset(hti, 0, sizeof(HTableIter));
+
+    hti->htable = ht;
+
+    for (int i = 0; i < ht->cap; ++i) {
+        hti->curr = NULL;
+        hti->next = ht->buckets[i];
+        hti->bucket_idx = i;
+        if (hti->next) {
+            return;
+        }
+    }
+}
+
+t_ret hashtable_iter_next(HTableIter *hti, Bucket **b) {
+    if (!hti->next) return S_ITER_END;
+    hti->curr = hti->next;
+    hti->next = hti->next->next;
+    *b = hti->curr;
+    if (hti->next) return S_OK;
+
+    hti->bucket_idx++;
+    for (; hti->bucket_idx < hti->htable->cap; ++hti->bucket_idx) {
+        hti->curr = NULL;
+        hti->next = hti->htable->buckets[hti->bucket_idx];
+        if (hti->next) {
+            return S_OK;
+        }
+    }
+    return S_OK;
+}
+
+
 // hash functions
 size_t ptr_hash(const void *key) {
     size_t a = (size_t) key;
@@ -196,7 +225,4 @@ int int_cmp(void *i1, void *i2) {
 }
 
 // val destroyers
-void default_destructor(void *p) {
-    p++;
-    return;
-}
+void noop_destructor(void *p) {}
