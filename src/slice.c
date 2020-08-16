@@ -93,9 +93,6 @@ void slice_map(Slice *s, void (*m)(void *)) {
 }
 
 void slice_delete(Slice *s, void (*cf)(void *)) {
-    if (s->len == 0) {
-        return;
-    }
     for (int i = 0; i < s->len; ++i) {
         if (cf != NULL)
             cf(s->buffer[i]);

@@ -6,9 +6,9 @@
 static Slice *s;
 
 TEST_GROUP_C_SETUP(SliceTest) {
-    CHECK_EQUAL_C_INT(S_OK, slice_new(&s, 0, 0));
+    CHECK_EQUAL_C_INT(S_OK, slice_new(&s, 0, 16));
     CHECK_EQUAL_C_INT(0, slice_len(s));
-    CHECK_EQUAL_C_INT(1, slice_cap(s));
+    CHECK_EQUAL_C_INT(16, slice_cap(s));
 }
 
 TEST_C(SliceTest, Append) {
