@@ -1,5 +1,5 @@
 cmake_minimum_required(VERSION 3.17)
-project(libstructs C)
+project(structs C)
 
 enable_language(C)
 enable_language(CXX)
@@ -9,10 +9,8 @@ set(CMAKE_C_FLAGS "${CMAKE_C_FLAGS} ${CFLAGS}")
 set(CMAKE_CXX_FLAGS_DEBUG "${CMAKE_CXX_FLAGS_DEBUG} -fno-omit-frame-pointer -fsanitize=address")
 set(CMAKE_C_FLAGS_DEBUG "${CMAKE_CXX_FLAGS_DEBUG} -fno-omit-frame-pointer -fsanitize=address")
 set(CMAKE_LINKER_FLAGS_DEBUG "${CMAKE_LINKER_FLAGS_DEBUG} -fno-omit-frame-pointer -fsanitize=address")
-
 enable_testing()
 
-add_subdirectory(list)
-add_subdirectory(slice)
-add_subdirectory(hashtable)
+add_subdirectory(src)
 add_subdirectory(test)
+message(${CMAKE_CURRENT_BINARY_DIR})

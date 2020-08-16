@@ -5,7 +5,6 @@
 #include <stdlib.h>
 
 
-
 typedef struct s_slice Slice;
 
 void slice_sort(Slice *s, int (*cmp)(const void *, const void *));

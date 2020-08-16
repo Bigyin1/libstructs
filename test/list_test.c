@@ -1,6 +1,6 @@
 #include "CppUTest/TestHarness_c.h"
-#include "list.h"
-#include "retcodes.h"
+#include "structs/list.h"
+#include "structs/retcodes.h"
 #include <stdio.h>
 
 static List *l;

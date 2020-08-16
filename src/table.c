@@ -1,4 +1,4 @@
-#include "hashtable.h"
+#include "structs/hashtable.h"
 
 #define DEFAULT_CAPACITY 16
 #define LOAD_FACTOR 0.75f
@@ -158,7 +158,6 @@ size_t hashtable_size(HTable *ht) {
 size_t hashtable_capacity(HTable *ht) {
     return ht->cap;
 }
-
 
 // htable iterator
 

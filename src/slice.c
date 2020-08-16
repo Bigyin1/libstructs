@@ -1,5 +1,5 @@
-#include "slice.h"
-#include "retcodes.h"
+#include "structs/slice.h"
+#include "structs/retcodes.h"
 #include <stdlib.h>
 #include <string.h>
 
@@ -43,7 +43,7 @@ t_ret slice_grow(Slice *s, size_t cap) {
 
     void **nb = calloc(cap, sizeof(void *));
     if (!nb) return S_ALLOC_ERR;
-    memcpy(nb, s->buffer, s->len*sizeof(void *));
+    memcpy(nb, s->buffer, s->len * sizeof(void *));
     free(s->buffer);
     s->buffer = nb;
     s->cap = cap;
@@ -63,7 +63,7 @@ t_ret slice_insert(Slice *s, size_t idx, void *data) {
         return S_OK;
     }
 
-    memmove(s->buffer + idx + 1, s->buffer + idx, (s->len - idx)*sizeof(void *));
+    memmove(s->buffer + idx + 1, s->buffer + idx, (s->len - idx) * sizeof(void *));
     s->len++;
     s->buffer[idx] = data;
     return S_OK;

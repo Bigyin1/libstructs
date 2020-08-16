@@ -1,13 +1,11 @@
-#include "list.h"
-#include "retcodes.h"
-
+#include "structs/list.h"
+#include "structs/retcodes.h"
 
 
 struct s_list {
     Node *head;
     Node *tail;
     size_t size;
-
 };
 
 
@@ -149,10 +147,10 @@ t_ret list_filter_mod(List *l, bool (*f)(void *)) {
     return S_OK;
 }
 
-void list_sort(List *l, int (*cmp) (void*, void*)) {
+void list_sort(List *l, int (*cmp)(void *, void *)) {
     size_t sz = l->size;
     while (--sz) {
-        Node* n = l->head;
+        Node *n = l->head;
         for (int i = 0; i < sz; ++i) {
             if (cmp(n->data, n->next->data) > 0) {
                 void *tmp = n->data;
@@ -167,7 +165,7 @@ void list_sort(List *l, int (*cmp) (void*, void*)) {
 void list_reverse(List *l) {
     if (l->size == 0 || l->size == 1) return;
 
-    Node  *tmp;
+    Node *tmp;
     Node *n = l->head;
     while (n) {
         tmp = n->next;
@@ -180,7 +178,7 @@ void list_reverse(List *l) {
     l->tail = tmp;
 }
 
-void list_foreach(List *l, void (*f)(void*)) {
+void list_foreach(List *l, void (*f)(void *)) {
     Node *n = l->head;
 
     while (n) {
@@ -189,7 +187,7 @@ void list_foreach(List *l, void (*f)(void*)) {
     }
 }
 
-t_ret list_get_head(List *l, Node** n) {
+t_ret list_get_head(List *l, Node **n) {
     if (l->size == 0) {
         return S_NOT_EXIST;
     }
@@ -197,7 +195,7 @@ t_ret list_get_head(List *l, Node** n) {
     return S_OK;
 }
 
-t_ret list_get_tail(List *l, Node** n) {
+t_ret list_get_tail(List *l, Node **n) {
     if (l->size == 0) {
         return S_NOT_EXIST;
     }

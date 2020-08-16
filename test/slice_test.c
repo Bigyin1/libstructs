@@ -1,6 +1,6 @@
 #include "CppUTest/TestHarness_c.h"
-#include "slice.h"
-#include "retcodes.h"
+#include "structs/retcodes.h"
+#include "structs/slice.h"
 #include <string.h>
 
 static Slice *s;

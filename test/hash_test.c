@@ -1,7 +1,7 @@
 #include "CppUTest/TestHarness_c.h"
-#include "hashtable.h"
-#include "retcodes.h"
-#include "slice.h"
+#include "structs/hashtable.h"
+#include "structs/retcodes.h"
+#include "structs/slice.h"
 #include <stdio.h>
 #include <string.h>
 

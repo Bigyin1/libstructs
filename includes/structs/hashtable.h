@@ -13,14 +13,14 @@ typedef struct s_bucket {
     size_t hash;
     void *key;
     void *val;
-}   Bucket;
+} Bucket;
 
 typedef struct s_htable_iter {
     HTable *htable;
     size_t bucket_idx;
     Bucket *curr;
     Bucket *next;
-}   HTableIter;
+} HTableIter;
 
 
 // hashes string
