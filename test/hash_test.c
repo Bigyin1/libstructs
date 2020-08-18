@@ -49,8 +49,8 @@ TEST_C(HTableTest, SetGet) {
         CHECK_EQUAL_C_STRING(expval, val);
         free(val);
     }
-    slice_delete(keys, NULL);
-    slice_delete(vals, NULL);
+    slice_free(keys, NULL);
+    slice_free(vals, NULL);
 }
 
 TEST_GROUP_C_TEARDOWN(HTableTest) {

@@ -47,5 +47,5 @@ TEST_C(SliceTest, Insert) {
 
 
 TEST_GROUP_C_TEARDOWN(SliceTest) {
-    slice_delete(s, free);
+    slice_free(s, free);
 }

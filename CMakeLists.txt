@@ -3,12 +3,6 @@ project(structs C)
 
 enable_language(C)
 enable_language(CXX)
-set(CFLAGS "-Wall -Werror")
-set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} ${CFLAGS}")
-set(CMAKE_C_FLAGS "${CMAKE_C_FLAGS} ${CFLAGS}")
-set(CMAKE_CXX_FLAGS_DEBUG "${CMAKE_CXX_FLAGS_DEBUG} -fno-omit-frame-pointer -fsanitize=address")
-set(CMAKE_C_FLAGS_DEBUG "${CMAKE_CXX_FLAGS_DEBUG} -fno-omit-frame-pointer -fsanitize=address")
-set(CMAKE_LINKER_FLAGS_DEBUG "${CMAKE_LINKER_FLAGS_DEBUG} -fno-omit-frame-pointer -fsanitize=address")
 enable_testing()
 
 add_subdirectory(src)

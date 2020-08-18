@@ -92,7 +92,7 @@ void slice_map(Slice *s, void (*m)(void *)) {
     }
 }
 
-void slice_delete(Slice *s, void (*cf)(void *)) {
+void slice_free(Slice *s, void (*cf)(void *)) {
     for (int i = 0; i < s->len; ++i) {
         if (cf != NULL)
             cf(s->buffer[i]);
