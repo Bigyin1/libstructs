@@ -13,6 +13,7 @@ target_link_libraries(slice_test ${PROJECT_NAME} ${CPPUTEST_LDFLAGS})
 add_executable(hashtable_test hash_test.c hashTest.cpp)
 target_link_libraries(hashtable_test ${PROJECT_NAME} ${CPPUTEST_LDFLAGS})
 
+enable_testing()
 add_test(ListTest list_test -c -v)
 add_test(SliceTest slice_test -c -v)
 add_test(HashtableTest hashtable_test -c -v)
