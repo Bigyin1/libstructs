@@ -27,6 +27,7 @@ t_ret list_get_tail(List *l, Node **n);
 void list_reverse(List *l);
 t_ret list_filter_new(List *l, List **nl, bool (*f)(void *));
 t_ret list_filter_mod(List *l, bool (*f)(void *));
+void list_foreach(List *l, void (*f)(void *));
 void list_free(List *l, void (*cf)(void *data));
 size_t list_size(List *l);
 
